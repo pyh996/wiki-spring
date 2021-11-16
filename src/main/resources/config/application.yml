@@ -1,0 +1,14 @@
+server:
+  port: 8888
+
+
+spring:
+  datasource:
+    # 数据源
+    url: jdbc:mysql://120.77.213.159:3307/wiki?autoReconnect=true&useUnicode=true&characterEncoding=utf8&useSSL=false
+    username: root
+    password: abc123456
+
+
+mybatis:
+  mapper-locations: classpath:/mapper/**/*.xml
