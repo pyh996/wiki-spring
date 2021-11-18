@@ -1,14 +1,12 @@
-package com.wiki.spring.domain;
+package com.wiki.spring.req;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import org.springframework.data.annotation.Id;
-
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
-public class Ebook {
-
+public class EbookSaveReq {
     private Long id;
 
+    @NotNull(message = "【名称】不能为空")
     private String name;
 
     private Long category1Id;
@@ -25,10 +23,28 @@ public class Ebook {
 
     private Integer voteCount;
 
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone="GMT+8")
+
     private Date createTime;
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone="GMT+8")
+
     private Date updateTime;
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
 
     public Long getId() {
         return id;
@@ -102,22 +118,6 @@ public class Ebook {
         this.voteCount = voteCount;
     }
 
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
-
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -133,8 +133,6 @@ public class Ebook {
         sb.append(", docCount=").append(docCount);
         sb.append(", viewCount=").append(viewCount);
         sb.append(", voteCount=").append(voteCount);
-        sb.append(", createTime=").append(createTime);
-        sb.append(", updateTime=").append(updateTime);
         sb.append("]");
         return sb.toString();
     }
