@@ -1,10 +1,9 @@
 package com.wiki.spring.controller;
 
 
-import com.wiki.spring.req.EbookQueryReq;
-
-import com.wiki.spring.req.EbookSaveReq;
-import com.wiki.spring.service.EbookService;
+import com.wiki.spring.req.CategoryQueryReq;
+import com.wiki.spring.req.CategorySaveReq;
+import com.wiki.spring.service.CategoryService;
 import com.wiki.spring.utils.R;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,20 +14,20 @@ import java.text.ParseException;
 
 @Slf4j
 @RestController
-@RequestMapping("/ebook")
-public class EbookController {
+@RequestMapping("/category")
+public class CategoryController {
     @Autowired
-    private EbookService ebookService;
+    private CategoryService categoryService;
 
-    @GetMapping("/list")
-    public R list(@Valid EbookQueryReq req) { // @ModelAttribute  或者必须保证有set和get
-        return R.ok(ebookService.list(req));
+    @GetMapping("/all")
+    public R list(@Valid CategoryQueryReq req) { // @ModelAttribute  或者必须保证有set和get
+        return R.ok(categoryService.list(req));
     }
 
 
     @PostMapping("/save")
-    public R save(@Valid  @RequestBody EbookSaveReq req) throws ParseException { // @ModelAttribute  或者必须保证有set和get
-        ebookService.save(req);
+    public R save(@Valid  @RequestBody CategorySaveReq req) throws ParseException { // @ModelAttribute  或者必须保证有set和get
+        categoryService.save(req);
         return R.ok();
     }
 
@@ -36,7 +35,7 @@ public class EbookController {
 
     public R delete(@PathVariable Long id) { // @ModelAttribute  或者必须保证有set和get
         log.warn("id------->{}", id);
-        ebookService.delete(id);
+        categoryService.delete(id);
         return R.ok(String.format("%s 删除成功", id), "");
     }
 

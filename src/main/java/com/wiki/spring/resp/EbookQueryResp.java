@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import java.util.Date;
 
 public class EbookQueryResp  {
-    private Long id;
+    private String id;
 
     private String name;
 
@@ -45,11 +45,11 @@ public class EbookQueryResp  {
         this.updateTime = updateTime;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

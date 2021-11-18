@@ -7,7 +7,7 @@ import java.util.Date;
 
 public class Ebook {
 
-    private Long id;
+    private String id;
 
     private String name;
 
@@ -30,11 +30,11 @@ public class Ebook {
     @JsonFormat(pattern = "yyyy-MM-dd", timezone="GMT+8")
     private Date updateTime;
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

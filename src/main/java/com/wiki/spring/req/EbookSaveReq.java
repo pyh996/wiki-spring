@@ -1,10 +1,12 @@
 package com.wiki.spring.req;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 public class EbookSaveReq {
-    private Long id;
+    private String id;
 
     @NotNull(message = "【名称】不能为空")
     private String name;
@@ -13,6 +15,7 @@ public class EbookSaveReq {
 
     private Long category2Id;
 
+    @NotNull(message = "【描述】不能为空")
     private String description;
 
     private String cover;
@@ -23,9 +26,9 @@ public class EbookSaveReq {
 
     private Integer voteCount;
 
-
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")  // 字符串的时间转成 DATE对象的时间
     private Date createTime;
-
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date updateTime;
 
     public Date getCreateTime() {
@@ -46,11 +49,11 @@ public class EbookSaveReq {
     }
 
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

@@ -1,7 +1,7 @@
 package com.wiki.spring.resp;
 
 public class CategoryQueryResp {
-    private Long id;
+    private String id;
 
     private Long parent;
 
@@ -9,11 +9,11 @@ public class CategoryQueryResp {
 
     private Integer sort;
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

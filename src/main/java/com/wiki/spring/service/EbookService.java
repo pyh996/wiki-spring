@@ -71,7 +71,7 @@ public class EbookService {
             ebook.setCreateTime(NowTime.create());
             ebook.setUpdateTime(NowTime.create());
             // 雪花算法生成一个唯一ID
-            ebook.setId(snowFlake.nextId());
+            ebook.setId(String.valueOf(snowFlake.nextId()));
             ebookMapper.insert(ebook);
         } else { //如果有id,代表更新
             ebook.setUpdateTime(NowTime.create());
