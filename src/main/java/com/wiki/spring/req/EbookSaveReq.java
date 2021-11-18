@@ -8,6 +8,7 @@ import java.util.Date;
 public class EbookSaveReq {
     private String id;
 
+
     @NotNull(message = "【名称】不能为空")
     private String name;
 
@@ -123,20 +124,18 @@ public class EbookSaveReq {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
-        sb.append(", name=").append(name);
-        sb.append(", category1Id=").append(category1Id);
-        sb.append(", category2Id=").append(category2Id);
-        sb.append(", description=").append(description);
-        sb.append(", cover=").append(cover);
-        sb.append(", docCount=").append(docCount);
-        sb.append(", viewCount=").append(viewCount);
-        sb.append(", voteCount=").append(voteCount);
-        sb.append("]");
-        return sb.toString();
+        return getClass().getSimpleName() +
+                " [" +
+                "Hash = " + hashCode() +
+                ", id=" + id +
+                ", name=" + name +
+                ", category1Id=" + category1Id +
+                ", category2Id=" + category2Id +
+                ", description=" + description +
+                ", cover=" + cover +
+                ", docCount=" + docCount +
+                ", viewCount=" + viewCount +
+                ", voteCount=" + voteCount +
+                "]";
     }
 }
