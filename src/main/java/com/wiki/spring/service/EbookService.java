@@ -41,11 +41,17 @@ public class EbookService {
 
         EbookExample ebookExample = new EbookExample();
         // 设置为时间降序
-        ebookExample.setOrderByClause("update_time desc");
+        ebookExample.setOrderByClause("create_time desc");
         EbookExample.Criteria criteria = ebookExample.createCriteria();
         // 设置模糊查询
         if (!ObjectUtils.isEmpty(req.getName())) {
             criteria.andNameLike("%" + req.getName() + "%");
+        }
+        // 设置分类的查询条件
+        if (!ObjectUtils.isEmpty(req.getCategoryId2())) {
+            log.info("req.getCategoryId2() {}",req.getCategoryId2());
+            // 判断分类查询条件
+            criteria.andCategory2IdEqualTo(Long.valueOf(req.getCategoryId2()));
         }
         // 分页
         PageHelper.startPage(req.getPage(), req.getSize());  // 只对第一条查询语句有效

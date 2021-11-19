@@ -40,4 +40,6 @@ public class EbookController {
         return R.ok(String.format("%s 删除成功", id), "");
     }
 
+
+
 }
