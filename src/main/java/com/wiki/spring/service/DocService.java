@@ -6,6 +6,8 @@ import com.github.pagehelper.PageInfo;
 import com.wiki.spring.domain.Content;
 import com.wiki.spring.domain.Doc;
 import com.wiki.spring.domain.DocExample;
+import com.wiki.spring.exception.BusinessException;
+import com.wiki.spring.exception.BusinessExceptionCode;
 import com.wiki.spring.mapper.ContentMapper;
 import com.wiki.spring.mapper.DocMapper;
 import com.wiki.spring.mapper.DocMapperCust;
@@ -14,8 +16,11 @@ import com.wiki.spring.req.DocSaveReq;
 import com.wiki.spring.resp.DocQueryResp;
 import com.wiki.spring.resp.PageResp;
 import com.wiki.spring.utils.CopyUtil;
+import com.wiki.spring.utils.RedisUtil;
+import com.wiki.spring.utils.RequestContext;
 import com.wiki.spring.utils.SnowFlake;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
@@ -36,6 +41,8 @@ public class DocService {
     @Autowired
     private SnowFlake snowFlake;
 
+    @Autowired
+    public RedisUtil redisUtil;
 
     @Autowired
     private DocMapperCust docMapperCust;
@@ -134,6 +141,31 @@ public class DocService {
             return content.getContent();  // 返回内容
         }
     }
+
+    /**
+     * 点赞
+     */
+    public void vote(Long id) {
+        // docMapperCust.increaseVoteCount(id);
+        // 远程IP+doc.id作为key，24小时内不能重复
+        String ip = RequestContext.getRemoteAddr();
+        if (redisUtil.validateRepeat("DOC_VOTE_" + id + "_" + ip, 5000)) {
+            docMapperCust.increaseVoteCount(id);
+        } else {
+            throw new BusinessException(BusinessExceptionCode.VOTE_REPEAT);
+        }
+
+        // 推送消息
+        Doc docDb = docMapper.selectByPrimaryKey(id);
+        String logId = MDC.get("LOG_ID");
+
+//        wsService.sendInfo("【" + docDb.getName() + "】被点赞！", logId);
+        // rocketMQTemplate.convertAndSend("VOTE_TOPIC", "【" + docDb.getName() + "】被点赞！");
+    }
+
+        public void updateEbookInfo( ){
+            docMapperCust.updateEbookInfo();
+        }
 
 //    public Integer DeleteContent(Long id) {
 //        int row = contentMapper.deleteByPrimaryKey(id);

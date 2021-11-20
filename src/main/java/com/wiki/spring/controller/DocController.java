@@ -51,7 +51,14 @@ public class DocController {
     @GetMapping("/find-content/{id}")
     public R findContent(@PathVariable Long id) {
 
-        return R.ok(String.format("%s 成功", id), docService.findContent(id));
+        return R.ok(String.format("%s 查询文章成功", id), docService.findContent(id));
+    }
+
+
+    @GetMapping("/vote/{id}")
+    public R vote(@PathVariable Long id) {
+        docService.vote(id);
+        return R.ok(String.format("%s 点赞成功", id));
     }
 
 }
