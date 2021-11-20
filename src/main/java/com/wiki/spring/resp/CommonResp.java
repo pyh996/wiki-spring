@@ -26,7 +26,7 @@ public class CommonResp<T> {
     public String toString() {
         final StringBuffer sb = new StringBuffer("ResponseDto{");
         sb.append("success=").append(success);
-        sb.append(", message='").append(message).append('\'');
+        sb.append(", msg='").append(message).append('\'');
         sb.append(", content=").append(content);
         sb.append('}');
         return sb.toString();

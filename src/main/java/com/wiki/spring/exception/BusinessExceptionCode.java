@@ -1,5 +1,9 @@
 package com.wiki.spring.exception;
 
+
+/**
+ * <h1>枚举类</h1>
+ */
 public enum BusinessExceptionCode {
 
     USER_LOGIN_NAME_EXIST("登录名已存在"),

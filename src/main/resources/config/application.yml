@@ -9,17 +9,27 @@ spring:
     username: root
     password: abc123456
     driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 15
+      auto-commit: true
+      idle-timeout: 30000
+      pool-name: DatebookHikariCP
+      max-lifetime:  500000
+      connection-timeout: 30000
+      connection-test-query: SELECT 1
 
-#    type: com.zaxxer.hikari.HikariDataSource
-#    hikari:
-#      minimum-idle: 5
-#      maximum-pool-size: 15
-#      auto-commit: true
-#      idle-timeout: 30000
-#      pool-name: DatebookHikariCP
-#      max-lifetime:  500000
-#      connection-timeout: 30000
-#      connection-test-query: SELECT 1
+#  redis:
+#    host: r-uf6ljbcdaxobsifyctpd.redis.rds.aliyuncs.com
+#    port: 6379
+#    password: Redis000
+
+  redis:
+    host: 120.77.213.159
+    port: 6379
+    password:
+
 
 mybatis:
   mapper-locations: classpath:/mapper/**/*.xml

@@ -66,17 +66,18 @@ public class UserService {
     public void save(UserSaveReq req) {
         User user = CopyUtil.copy(req, User.class);
         if (ObjectUtils.isEmpty(req.getId())) {
+            // 现寻找到用户
             User userDB = selectByLoginName(req.getLoginName());
             if (ObjectUtils.isEmpty(userDB)) {
                 // 新增
                 user.setId(String.valueOf(snowFlake.nextId()));
                 userMapper.insert(user);
             } else {
-                // 用户名已存在
+                // 用户名已存在,自定义异常
                 throw new BusinessException(BusinessExceptionCode.USER_LOGIN_NAME_EXIST);
             }
         } else {
-            // 更新
+            // 更新,只用更新有值的,没有值得不需要更新
             user.setLoginName(null);
             user.setPassword(null);
             userMapper.updateByPrimaryKeySelective(user);
@@ -87,6 +88,8 @@ public class UserService {
         userMapper.deleteByPrimaryKey(id);
     }
 
+
+    // 更具用户名查找用户
     public User selectByLoginName(String LoginName) {
         UserExample userExample = new UserExample();
         UserExample.Criteria criteria = userExample.createCriteria();
@@ -111,12 +114,15 @@ public class UserService {
      * 登录
      */
     public UserLoginResp login(UserLoginReq req) {
+        // 找出用户信息
         User userDb = selectByLoginName(req.getLoginName());
+        // 如果用户信息为空,说明没有创建该用户
         if (ObjectUtils.isEmpty(userDb)) {
             // 用户名不存在
             LOG.info("用户名不存在, {}", req.getLoginName());
             throw new BusinessException(BusinessExceptionCode.LOGIN_USER_ERROR);
         } else {
+            // 判断密码是否相同
             if (userDb.getPassword().equals(req.getPassword())) {
                 // 登录成功
                 UserLoginResp userLoginResp = CopyUtil.copy(userDb, UserLoginResp.class);

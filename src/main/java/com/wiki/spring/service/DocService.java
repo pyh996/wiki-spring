@@ -8,6 +8,7 @@ import com.wiki.spring.domain.Doc;
 import com.wiki.spring.domain.DocExample;
 import com.wiki.spring.mapper.ContentMapper;
 import com.wiki.spring.mapper.DocMapper;
+import com.wiki.spring.mapper.DocMapperCust;
 import com.wiki.spring.req.DocQueryReq;
 import com.wiki.spring.req.DocSaveReq;
 import com.wiki.spring.resp.DocQueryResp;
@@ -34,6 +35,10 @@ public class DocService {
 
     @Autowired
     private SnowFlake snowFlake;
+
+
+    @Autowired
+    private DocMapperCust docMapperCust;
 
 
     //    @SuppressWarnings(value = "all")
@@ -76,18 +81,20 @@ public class DocService {
         // 响应参数(req)变成实体(doc)
         Doc doc = CopyUtil.copy(req, Doc.class);
         Content content = CopyUtil.copy(req, Content.class);  // 生成一个content的实体类
-        log.warn("doc.getId() {} -------{} ",doc.getId(),req.getId());
+        log.warn("doc.getId() {} -------{} ", doc.getId(), req.getId());
         // 如果没有id,代表新增
         if (ObjectUtils.isEmpty(doc.getId())) {
-            log.warn("IFFFFFFFFFFFFFFF {}",doc.getId());
+            log.warn("IFFFFFFFFFFFFFFF {}", doc.getId());
             // 雪花算法生成一个唯一ID
             doc.setId(String.valueOf(snowFlake.nextId()));
+            doc.setViewCount(0);
+            doc.setVoteCount(0);
             docMapper.insert(doc);
             // ccontent表
             content.setId(doc.getId());
             contentMapper.insert(content);
         } else { //如果有id,代表更新
-            log.warn("ELSEEEEEEEEEEEEEEEE {}",doc.getId());
+            log.warn("ELSEEEEEEEEEEEEEEEE {}", doc.getId());
             // 更新
             docMapper.updateByPrimaryKey(doc);
             // 关于大字段的更新
@@ -116,10 +123,11 @@ public class DocService {
         log.warn("{}", row);
     }
 
+    // 查找文档内容
     public String findContent(Long id) {
         Content content = contentMapper.selectByPrimaryKey(id);
         // 文档阅读数+1
-//        docMapperCust.increaseViewCount(id);
+        docMapperCust.increaseViewCount(id);
         if (ObjectUtils.isEmpty(content)) {  // 判断防止空指针异常
             return "";
         } else {

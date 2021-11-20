@@ -19,12 +19,12 @@ import java.io.Serializable;
 @AllArgsConstructor   // 全参的构造方式
 public class CommonResponse<T> implements Serializable {
     private Integer code;
-    private String message;
+    private String msg;
     private T Data;
 
-    public CommonResponse(Integer code, String message){
+    public CommonResponse(Integer code, String msg){
         this.code = code;
-        this.message = message;
+        this.msg = msg;
     }
 
 

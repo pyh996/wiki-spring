@@ -1,6 +1,6 @@
 package com.wiki.spring.advice;
 
-import com.wiki.spring.utils.CommonResponse;
+
 import com.wiki.spring.utils.R;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.BindException;
@@ -33,15 +33,11 @@ public class GlobalExceptionAdvice {
         return R.error(10001, err_data.toString());
     }
 
-    @ExceptionHandler(value = Exception.class)   // 对所有的异常做捕获
-    public CommonResponse<String> handlerCommerceException(HttpServletRequest req, Exception ex) {
-        // e.getBindingResult().getAllErrors().get(0).getDefaultMessage()
+    // 对所有的异常做捕获
+    @ExceptionHandler(value = Exception.class)
+    public R handlerCommerceException(HttpServletRequest req, Exception ex) {
+        return R.error(-1, ex.getMessage());
 
-
-        CommonResponse<String> response = new CommonResponse<>(-1, ex.getMessage());
-        response.setData("");
-        log.error("service  has error", ex.getMessage(), ex);
-        return response;
     }
 }
 
