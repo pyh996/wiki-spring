@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.text.ParseException;
 import java.util.List;
 
@@ -56,7 +57,7 @@ public class DocController {
 
 
     @GetMapping("/vote/{id}")
-    public R vote(@PathVariable Long id) {
+    public R vote( @PathVariable(name="id",required = true) Long id) {
         docService.vote(id);
         return R.ok(String.format("%s 点赞成功", id));
     }

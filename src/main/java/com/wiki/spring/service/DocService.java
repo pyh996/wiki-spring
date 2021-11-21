@@ -19,6 +19,7 @@ import com.wiki.spring.utils.CopyUtil;
 import com.wiki.spring.utils.RedisUtil;
 import com.wiki.spring.utils.RequestContext;
 import com.wiki.spring.utils.SnowFlake;
+import com.wiki.spring.websocket.WebSocketServer;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +47,9 @@ public class DocService {
 
     @Autowired
     private DocMapperCust docMapperCust;
+
+    @Autowired
+    private WebSocketServer webSocketServer;
 
 
     //    @SuppressWarnings(value = "all")
@@ -155,17 +159,17 @@ public class DocService {
             throw new BusinessException(BusinessExceptionCode.VOTE_REPEAT);
         }
 
-        // 推送消息
+        // 根据id查询doc表的信息
         Doc docDb = docMapper.selectByPrimaryKey(id);
         String logId = MDC.get("LOG_ID");
-
-//        wsService.sendInfo("【" + docDb.getName() + "】被点赞！", logId);
+        // 推送消息
+        webSocketServer.sendInfo("【" + docDb.getName() + "】被点赞！", logId);
         // rocketMQTemplate.convertAndSend("VOTE_TOPIC", "【" + docDb.getName() + "】被点赞！");
     }
 
-        public void updateEbookInfo( ){
-            docMapperCust.updateEbookInfo();
-        }
+    public void updateEbookInfo() {
+        docMapperCust.updateEbookInfo();
+    }
 
 //    public Integer DeleteContent(Long id) {
 //        int row = contentMapper.deleteByPrimaryKey(id);
