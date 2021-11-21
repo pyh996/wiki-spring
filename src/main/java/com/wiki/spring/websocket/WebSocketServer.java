@@ -3,6 +3,7 @@ package com.wiki.spring.websocket;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import javax.websocket.*;
@@ -64,6 +65,7 @@ public class WebSocketServer {
     /**
      * 群发消息
      */
+
     public void sendInfo(String s, String message) {
 //        log.error("开始推送：{}，内容：{},s {}", token, message,s);
         log.error(" message：{} ",   message  );

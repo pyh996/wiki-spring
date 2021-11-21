@@ -20,6 +20,11 @@ spring:
       connection-timeout: 30000
       connection-test-query: SELECT 1
 
+#  rabbitmq:
+#      host: 127.0.0.1
+#      port: 5672
+
+
 #  redis:
 #    host: r-uf6ljbcdaxobsifyctpd.redis.rds.aliyuncs.com
 #    port: 6379

@@ -47,7 +47,8 @@
 <!--        <table tableName="category"/>-->
 <!--        <table tableName="doc"/>-->
 <!--        <table tableName="content"/>-->
-                <table tableName="user"/>
-        <!--        <table tableName="test"/>-->
+<!--                <table tableName="user"/>-->
+  <!--        <table tableName="test"/>-->
+                <table tableName="ebook_snapshot"/>
     </context>
 </generatorConfiguration>

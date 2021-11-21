@@ -24,6 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
 import java.text.ParseException;
@@ -49,7 +50,7 @@ public class DocService {
     private DocMapperCust docMapperCust;
 
     @Autowired
-    private WebSocketServer webSocketServer;
+    private WsService wsService;
 
 
     //    @SuppressWarnings(value = "all")
@@ -88,6 +89,7 @@ public class DocService {
     /*
      **  保存编辑,支持新增和更新
      * */
+    @Transactional   // 增加事务,此方法在service的别的方法调用是不会生效的,只有在controller中才会生效
     public void save(DocSaveReq req) throws ParseException {
         // 响应参数(req)变成实体(doc)
         Doc doc = CopyUtil.copy(req, Doc.class);
@@ -162,8 +164,8 @@ public class DocService {
         // 根据id查询doc表的信息
         Doc docDb = docMapper.selectByPrimaryKey(id);
         String logId = MDC.get("LOG_ID");
-        // 推送消息
-        webSocketServer.sendInfo("【" + docDb.getName() + "】被点赞！", logId);
+        // 异步推送消息
+        wsService.sendInfo("【" + docDb.getName() + "】被点赞！", logId);
         // rocketMQTemplate.convertAndSend("VOTE_TOPIC", "【" + docDb.getName() + "】被点赞！");
     }
 

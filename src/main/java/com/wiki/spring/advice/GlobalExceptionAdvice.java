@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
+
 
 
 /**
@@ -36,6 +36,7 @@ public class GlobalExceptionAdvice {
     // 对所有的异常做捕获
     @ExceptionHandler(value = Exception.class)
     public R handlerCommerceException(HttpServletRequest req, Exception ex) {
+        log.error("ex.getMessage(),{}",ex.getMessage());
         return R.error(-1, ex.getMessage());
 
     }
