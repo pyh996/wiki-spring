@@ -45,7 +45,7 @@
 
     <!-- 获取首页数值数据：总阅读数、总点赞数、今日阅读数、今日点赞数、今日预计阅读数、今日预计阅读增长 -->
     <select id="getStatistic" resultType="com.wiki.spring.resp.StatisticResp">
-        select t1.`create_time`      as `create_time`,
+        select t1.`create_time`      as `createTime`,
                sum(t1.view_count)    as viewCount,
                sum(t1.vote_count)    as voteCount,
                sum(t1.view_increase) as viewIncrease,
@@ -55,9 +55,9 @@
         group by t1.`create_time`
         order by t1.`create_time` asc;
     </select>
-
+    <!-- 实体类和sql字段不一致的时候一定一定要记得,起别名!!!!!!!-->
     <select id="get30Statistic" resultType="com.wiki.spring.resp.StatisticResp">
-        select t1.`create_time`      as `create_time`,
+        select t1.`create_time`      as `createTime`,
                sum(t1.view_increase) as viewIncrease,
                sum(t1.vote_increase) as voteIncrease
         from ebook_snapshot t1

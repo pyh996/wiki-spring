@@ -6,8 +6,15 @@ import java.util.Date;
 
 public class StatisticResp {
 
-    @JsonFormat(pattern="MM-dd", timezone = "GMT+8")
-    private Date date;
+    @JsonFormat(pattern = "MM-dd", timezone="GMT+8")
+    private Date createTime;
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
 
     private int viewCount;
 
@@ -17,13 +24,8 @@ public class StatisticResp {
 
     private int voteIncrease;
 
-    public Date getDate() {
-        return date;
-    }
 
-    public void setDate(Date date) {
-        this.date = date;
-    }
+
 
     public int getViewCount() {
         return viewCount;
@@ -60,7 +62,7 @@ public class StatisticResp {
     @Override
     public String toString() {
         return "StatisticResp{" +
-                "date=" + date +
+                "createTime=" + createTime +
                 ", viewCount=" + viewCount +
                 ", voteCount=" + voteCount +
                 ", viewIncrease=" + viewIncrease +

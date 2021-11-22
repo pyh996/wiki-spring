@@ -3,6 +3,7 @@ package com.wiki.spring.config;
 import com.wiki.spring.interceptor.ActionInterceptor;
 import com.wiki.spring.interceptor.LoginInterceptor;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -39,5 +40,15 @@ public class SpringMvcConfig implements WebMvcConfigurer {
                         "/*/save",
                         "/*/delete/**",
                         "/*/reset-password");
+    }
+
+
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+                .allowedOriginPatterns("*")
+                .allowCredentials(true)
+                .allowedMethods("GET", "POST", "DELETE", "PUT","PATCH")
+                .maxAge(3600);
     }
 }

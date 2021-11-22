@@ -7,7 +7,7 @@ spring:
     allow-bean-definition-overriding: true
   datasource:
     # 数据源
-    url: jdbc:mysql://120.77.213.159:3307/wiki?autoReconnect=true&useUnicode=true&characterEncoding=utf8&useSSL=false
+    url: jdbc:mysql://127.0.0.1:3307/wiki?autoReconnect=true&useUnicode=true&characterEncoding=utf8&useSSL=false
     username: root
     password: abc123456
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -33,7 +33,7 @@ spring:
 #    password: Redis000
 
   redis:
-    host: 120.77.213.159
+    host: 127.0.0.1
     port: 6379
     password:
 
@@ -43,9 +43,9 @@ mybatis:
 # 打印所有的sql日志：sql, 参数, 结果
 
 
-logging:
-  level:
-    com.wiki.spring.mapper: trace
+#logging:
+#  level:
+#    com.wiki.spring.mapper: trace
 
 
 
